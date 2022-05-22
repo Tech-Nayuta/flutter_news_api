@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
+import 'package:json_annotation/json_annotation.dart';
 
-@immutable
 class Article {
   const Article({
     required this.id,
