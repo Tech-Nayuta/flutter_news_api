@@ -54,3 +54,5 @@ doc/api/
 /build/
 
 
+*.g.dart
+*.freezed.dart
