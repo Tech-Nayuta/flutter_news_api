@@ -13,6 +13,19 @@ class ArticlesNotifier extends StateNotifier<List<Article>> {
         urlToImage: "https://upload.wikimedia.org/wikipedia/commons/9/94/Hanshin_tigers_insignia.PNG",
         publishedAt: DateTime.now(),
       )));
+
+  void refresh() {
+    state = List<Article>.filled(
+        20,
+        Article(
+          source: const Source(id: "aaa", name: "aaa"),
+          title: "リフレッシュリフレッシュリフレッシュリフレッシュリフレッシュリフレッシュリフレッシュリフレッシュ",
+          description: "リフレッシュリフレッシュリフレッシュリフレッシュリフレッシュリフレッシュリフレッシュリフレッシュ",
+          url: "https://www.asahi.com/articles/ASQ5P6H2WQ5PPTQP00R.html",
+          urlToImage: "https://newsatcl-pctr.c.yimg.jp/t/amd-img/20220519-00418726-usoccer-000-3-view.jpg?exp=10800",
+          publishedAt: DateTime.now(),
+        ));
+  }
 }
 
 final articlesProvider =

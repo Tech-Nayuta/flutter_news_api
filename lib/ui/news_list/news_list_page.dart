@@ -40,31 +40,31 @@ class ArticleListItem extends StatelessWidget {
               height: 70,
             ),
 
-              Flexible(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        timeago.format(now.subtract(ago), locale: 'ja'),
-                        style: const TextStyle(
-                          color: Colors.grey,
-                          fontWeight: FontWeight.bold,
-                        ),
+            Flexible(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      timeago.format(now.subtract(ago), locale: 'ja'),
+                      style: const TextStyle(
+                        color: Colors.grey,
+                        fontWeight: FontWeight.bold,
                       ),
-                      Text(
-                        article.title ?? "No title",
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                        overflow: TextOverflow.clip,
-                        maxLines: 2,
+                    ),
+                    Text(
+                      article.title ?? "No title",
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
                       ),
-                    ],
-                  ),
+                      overflow: TextOverflow.clip,
+                      maxLines: 2,
+                    ),
+                  ],
                 ),
               ),
+            ),
             // )
           ],
         ),
@@ -80,16 +80,23 @@ class NewsListPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final List<Article> articles = ref.watch(articlesProvider);
-    // ref.read(articlesNotifierProvider.notifier).fetchHeadlines();
+    final List<Article> articles = ref.watch(articlesNotifierProvider);
+    ref.read(articlesNotifierProvider.notifier).fetchHeadlines();
 
-    return Center(
-      child: ListView.builder(
-          padding: const EdgeInsets.only(top: 5),
-          itemCount: articles.length,
-          itemBuilder: (context, index) {
-            return ArticleListItem(article: articles[index]);
-          }),
+    return RefreshIndicator(
+      onRefresh: () async {
+        await Future.delayed(const Duration(seconds: 0), () {
+          ref.read(articlesNotifierProvider.notifier).fetchHeadlines();
+        });
+      },
+      child: Center(
+        child: ListView.builder(
+            padding: const EdgeInsets.only(top: 5),
+            itemCount: articles.length,
+            itemBuilder: (context, index) {
+              return ArticleListItem(article: articles[index]);
+            }),
+      ),
     );
   }
 }
