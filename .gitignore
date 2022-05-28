@@ -54,3 +54,4 @@ doc/api/
 /build/
 
 
+*.g.dart
