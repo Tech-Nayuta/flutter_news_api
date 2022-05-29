@@ -15,4 +15,10 @@ abstract class ApiClient {
       @Query("category") String category,
       @Query("apiKey") String apiKey,
   );
+
+  @GET("/everything")
+  Future<News> fetchSearchNews(
+      @Query("q") String query,
+      @Query("apiKey") String apiKey,
+  );
 }
