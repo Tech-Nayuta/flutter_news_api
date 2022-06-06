@@ -24,6 +24,8 @@ class ArticlesList extends StatelessWidget {
       },
       child: Center(
         child: ListView.builder(
+            shrinkWrap: true,
+            // physics: const NeverScrollableScrollPhysics(),
             padding: const EdgeInsets.only(top: 5),
             itemCount: articles.length,
             itemBuilder: (context, index) {

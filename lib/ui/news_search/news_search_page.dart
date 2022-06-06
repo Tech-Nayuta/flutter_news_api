@@ -18,38 +18,29 @@ class NewsSearchPage extends HookConsumerWidget {
     return Center(
       child: Container(
         padding: const EdgeInsets.only(left: 10, top: 5, right: 10),
-        child: Column(
-          children: [
-            TextFormField(
-              controller: searchTextController,
-              onFieldSubmitted: (text) {
-                if(text.isNotEmpty) {
-                  ref.read(searchArticlesNotifierProvider.notifier).search(
-                      query: text);
-                }
-              },
-            ),
-            ArticlesList(
-              articles: articles,
-              onRefresh: () {
-                ref.read(searchArticlesNotifierProvider.notifier).search(
-                    query: searchTextController.text);
-              },
-            ),
-          ],
+          child: Column(
+            children: [
+              TextFormField(
+                controller: searchTextController,
+                onFieldSubmitted: (text) {
+                  if(text.isNotEmpty) {
+                    ref.read(searchArticlesNotifierProvider.notifier).search(
+                        query: text);
+                  }
+                },
+              ),
+              Flexible(
+                child: ArticlesList(
+                  articles: articles,
+                  onRefresh: () {
+                    ref.read(searchArticlesNotifierProvider.notifier).search(
+                        query: searchTextController.text);
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
-      ),
     );
   }
 }
-
-// class NewsSearchHeader extends HookConsumerWidget {
-//   const NewsSearchHeader({
-//     Key? key,
-//   }) : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context, WidgetRef ref) {
-//     return ;
-//   }
-// }
