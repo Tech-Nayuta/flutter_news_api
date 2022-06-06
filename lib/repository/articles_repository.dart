@@ -5,19 +5,33 @@ import '../../model/news.dart';
 import '../ui/response/result.dart';
 
 abstract class ArticlesRepository {
-  Future<Result<News>> fetchHeadlines({required String country, required String category});
+  Future<Result<News>> fetchHeadlines(
+      {required String country, required String category});
+  Future<Result<News>> fetchSearchNews(
+      {required String query});
 }
 
 class ArticlesRepositoryImpl extends ArticlesRepository {
   final ApiClient _client;
 
-  ArticlesRepositoryImpl([ApiClient? client]): _client = client ?? ApiClient(Dio());
+  ArticlesRepositoryImpl([ApiClient? client])
+      : _client = client ?? ApiClient(Dio());
 
   @override
-  Future<Result<News>> fetchHeadlines({required String country, required String category}) {
+  Future<Result<News>> fetchHeadlines(
+      {required String country, required String category}) {
     return _client
         .fetchHeadlines(country, category, EnvironemntVariables.newsApiKey)
         .then((news) => Result<News>.success(news))
-        .catchError((error)=>Result<News>.failure(error));
+        .catchError((error) => Result<News>.failure(error));
+  }
+
+  @override
+  Future<Result<News>> fetchSearchNews(
+      {required String query}) {
+    return _client
+        .fetchSearchNews(query, EnvironemntVariables.newsApiKey)
+        .then((news) => Result<News>.success(news))
+        .catchError((error) => Result<News>.failure(error));
   }
 }
